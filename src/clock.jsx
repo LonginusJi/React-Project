@@ -2,8 +2,6 @@ import React from "react";
 
 import { Button, Form, FormControl } from 'react-bootstrap'
 
-import './App.css'
-
 export class Clock extends React.Component {
   constructor(props) {
     super(props);
@@ -27,7 +25,6 @@ export class Clock extends React.Component {
   }
 
   getTimeUtil(deadline) {
-    console.log(Date.now());
     const time = Date.parse(deadline) - Date.parse(new Date());
     const seconds = Math.floor((time / 1000) % 60);
     const minutes = Math.floor((time / 1000 / 60) % 60);
@@ -56,7 +53,7 @@ export class Clock extends React.Component {
   render() {
     const { days, hours, minutes, seconds } = this.state;
     return (
-      <div>
+      <div className='component-container'>
         <div className='App-title'>
           Countdown to {this.state.deadline}
         </div>

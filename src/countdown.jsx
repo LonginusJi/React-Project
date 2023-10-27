@@ -2,73 +2,83 @@ import React from "react";
 
 import { Button, Form, FormControl } from 'react-bootstrap'
 
-import './App.css'
-
 export class Countdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      days: 0,
-      hours: 0,
-      minutes: 0,
+      timer: null,
+      countdownStart: false,
+      countdownStopped: false,
+      countdownFinish: false,
+      timeSetted: false,
+      deadline: 0,
       seconds: 0,
-      deadline: 'Dec. 25, 2023'
     };
 
     this.onDeadLineChange = this.onDeadLineChange.bind(this);
-  }
-
-  componentWillMount() {
-    this.getTimeUtil(this.state.deadline);
-  }
-
-  componentDidMount() {
-    setInterval(() => this.getTimeUtil(this.state.deadline), 1000)
-  }
-
-  getTimeUtil(deadline) {
-    const time = Date.parse(deadline) - Date.parse(new Date());
-    const seconds = Math.floor((time / 1000) % 60);
-    const minutes = Math.floor((time / 1000 / 60) % 60);
-    const hours = Math.floor(time / (1000 * 60 * 60) % 24);
-    const days = Math.floor(time / (1000 * 60 * 60 * 24));
-    this.setState({
-      days,
-      hours,
-      minutes,
-      seconds
-    })
-  }
-
-  leadingZero(num) {
-    return num < 10 ? `0${num}` : num
+    this.startTimer = this.startTimer.bind(this);
+    this.stopTimer = this.stopTimer.bind(this);
+    this.resetTimer = this.resetTimer.bind(this);
   }
 
   onDeadLineChange(value) {
-    this.setState({ newDeadline: value });
+    if (value > 0) {
+      this.setState({ deadline: value, timeSetted: true });
+    } else {
+      this.setState({ timeSetted: false });
+    }
   }
 
-  changeDeadline() {
-    this.setState({ deadline: this.state.newDeadline })
+  startTimer() {
+    this.setState({ countdownStart: true, countdownFinish: false });
+    const { deadline } = this.state;
+    this.setState({ seconds: deadline })
+
+    const timer = setInterval(() => {
+      this.setState({ seconds: this.state.seconds - 1 })
+      if (this.state.seconds === 0) {
+        this.setState({ countdownFinish: true })
+        clearInterval(timer);
+      }
+    }, 1000);
+
+    this.setState({ timer: timer })
+  }
+
+  stopTimer() {
+    clearInterval(this.state.timer);
+    this.setState({countdownStopped: true});
+  }
+
+  resetTimer() {
+    this.setState({
+      countdownStart: false,
+      countdownStopped: false,
+      countdownFinish: false,
+      seconds: 0
+    });
   }
 
   render() {
-    const { days, hours, minutes, seconds } = this.state;
+    const { countdownStart, countdownStopped, countdownFinish, deadline, seconds } = this.state;
     return (
-      <div>
-        <div className='App-title'>
-          Countdown to {this.state.deadline}
-        </div>
+      <div className='component-container'>
         <Form inline className='center-block'>
           <FormControl
             className='Deadline-input'
-            placeholder='New date' onChange={e => this.onDeadLineChange(e.target.value)} />
-          <Button onClick={this.changeDeadline.bind(this)}>Submit</Button>
-          <div className='Clock-days'>{days < 10 ? `0${days}` : days} days</div>
-          <div className='Clock-hours'>{hours < 10 ? `0${hours}` : hours} hours</div>
-          <div className='Clock-minutes'>{minutes < 10 ? `0${minutes}` : minutes} minutes</div>
-          <div className='Clock-seconds'>{seconds < 10 ? `0${seconds}` : seconds} seconds</div>
+            placeholder='Set countdown seconds' onChange={e => this.onDeadLineChange(e.target.value)} />
+          {!countdownStart ?
+            <Button disabled={!this.state.timeSetted} onClick={this.startTimer}>Start</Button>
+            : <Button onClick={this.stopTimer}>Stop</Button>
+          }
+          <Button disabled={!countdownStopped && !countdownFinish} onClick={this.resetTimer}>Reset</Button>
         </Form>
+        {countdownStart && !countdownFinish && <div className='App-title'>
+          Countdown to {deadline}: {seconds} {seconds === 1 ? 'second' : 'seconds'} remain
+        </div>}
+        {countdownFinish && <div className='App-title'>
+          Countdown finished
+        </div>}
       </div>
     )
   }
