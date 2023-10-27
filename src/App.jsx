@@ -5,8 +5,8 @@ import {
   Routes,
 } from 'react-router-dom';
 
-import { Clock } from './clock';
-import { Countdown } from './countdown';
+import { Clock } from './pages/clock';
+import { Countdown } from './pages/countdown';
 
 export default function App() {
   return (
