@@ -7,6 +7,7 @@ import {
 
 import { Clock } from './pages/clock';
 import { Countdown } from './pages/countdown';
+import { ProgressBar } from './pages/progress_bar';
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Clock />} />
             <Route path="/countdown" element={<Countdown />} />
+            <Route path="/progressbar" element={<ProgressBar />} />
           </Routes>
         </div>
       </Router>
