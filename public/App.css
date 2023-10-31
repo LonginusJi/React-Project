@@ -39,13 +39,39 @@
     width: 100%;
     border: solid 2px;
     border-radius: 10px;
-}
-.progress-bar {
-    width: 0%;
-    height: 20px;
-    border-radius: 8px;
-}
 
+    .progress-bar {
+        width: 0%;
+        height: 20px;
+        border-radius: 8px;
+        transition: width 0.1s linear;
+        animation: bar-color 10s infinite;
+    }
+}
+.progress-label {
+    align-self: end;
+}
 .button-group {
     align-self: center;
+}
+
+.rect-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.rect {
+    position: relative;
+    display: inline;
+    margin: 50px 50px;
+    width: 50px;
+    background: linear-gradient(0deg, blue, yellow);
+    border: solid 1px;
+}
+
+.rect-label {
+    position: absolute;
+    top: -21px;
+    left: 16px;
 }

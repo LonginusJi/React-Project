@@ -66,7 +66,8 @@ export class Countdown extends React.Component {
         <Form inline className='center-block'>
           <FormControl
             className='Deadline-input'
-            placeholder='Set countdown seconds' onChange={e => this.onDeadLineChange(e.target.value)} />
+            placeholder='Set countdown seconds'
+            onChange={e => this.onDeadLineChange(e.target.value)} />
           {!countdownStart ?
             <Button disabled={!this.state.timeSetted} onClick={this.startTimer}>Start</Button>
             : <Button onClick={this.stopTimer}>Stop</Button>
