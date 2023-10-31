@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 import { Button, Form, FormControl } from 'react-bootstrap';
 
-export class Clock extends React.Component {
+export default class clock extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -10,10 +10,11 @@ export class Clock extends React.Component {
       hours: 0,
       minutes: 0,
       seconds: 0,
-      deadline: 'Dec. 25, 2023'
+      deadline: 'Dec. 25, 2023',
     };
 
     this.onDeadLineChange = this.onDeadLineChange.bind(this);
+    this.changeDeadline = this.changeDeadline.bind(this);
   }
 
   componentWillMount() {
@@ -21,7 +22,11 @@ export class Clock extends React.Component {
   }
 
   componentDidMount() {
-    setInterval(() => this.getTimeUtil(this.state.deadline), 1000)
+    setInterval(() => this.getTimeUtil(this.state.deadline), 1000);
+  }
+
+  onDeadLineChange(value) {
+    this.setState({ newDeadline: value });
   }
 
   getTimeUtil(deadline) {
@@ -34,40 +39,76 @@ export class Clock extends React.Component {
       days,
       hours,
       minutes,
-      seconds
-    })
-  }
-
-  leadingZero(num) {
-    return num < 10 ? `0${num}` : num
-  }
-
-  onDeadLineChange(value) {
-    this.setState({ newDeadline: value });
+      seconds,
+    });
   }
 
   changeDeadline() {
-    this.setState({ deadline: this.state.newDeadline })
+    this.setState({ deadline: this.state.newDeadline });
+  }
+
+  isSubmitDisabled() {
+
   }
 
   render() {
-    const { days, hours, minutes, seconds } = this.state;
+    const {
+      deadline,
+      days,
+      hours,
+      minutes,
+      seconds,
+    } = this.state;
     return (
-      <div className='component-container'>
-        <div className='App-title'>
-          Countdown to {this.state.deadline}
+      <div className="component-container">
+        <div className="clock-title">
+          Countdown to {deadline}
         </div>
-        <Form inline className='center-block'>
+        <Form inline className="center-block">
           <FormControl
-            className='Deadline-input'
-            placeholder='New date' onChange={e => this.onDeadLineChange(e.target.value)} />
-          <Button onClick={this.changeDeadline.bind(this)}>Submit</Button>
-          <div className='Clock-days'>{days < 10 ? `0${days}` : days} days</div>
-          <div className='Clock-hours'>{hours < 10 ? `0${hours}` : hours} hours</div>
-          <div className='Clock-minutes'>{minutes < 10 ? `0${minutes}` : minutes} minutes</div>
-          <div className='Clock-seconds'>{seconds < 10 ? `0${seconds}` : seconds} seconds</div>
+            className="Deadline-input"
+            placeholder="Year"
+            onChange={(e) => this.onDeadLineChange(e.target.value)}
+          />
+          <FormControl
+            className="Deadline-input"
+            placeholder="Month"
+            onChange={(e) => this.onDeadLineChange(e.target.value)}
+          />
+          <FormControl
+            className="Deadline-input"
+            placeholder="Day"
+            onChange={(e) => this.onDeadLineChange(e.target.value)}
+          />
+          <FormControl
+            className="Deadline-input"
+            placeholder="Hour"
+            onChange={(e) => this.onDeadLineChange(e.target.value)}
+          />
+          <FormControl
+            className="Deadline-input"
+            placeholder="Minute"
+            onChange={(e) => this.onDeadLineChange(e.target.value)}
+          />
+          <FormControl
+            className="Deadline-input"
+            placeholder="Second"
+            onChange={(e) => this.onDeadLineChange(e.target.value)}
+          />
+          <Button
+            disabled={this.isSubmitDisabled}
+            onClick={this.changeDeadline}
+          >
+            Submit
+          </Button>
         </Form>
+        <div className="clock-container">
+          <div className="clock-days">{days < 10 ? `0${days}` : days} days</div>
+          <div className="clock-hours">{hours < 10 ? `0${hours}` : hours} hours</div>
+          <div className="clock-minutes">{minutes < 10 ? `0${minutes}` : minutes} minutes</div>
+          <div className="clock-seconds">{seconds < 10 ? `0${seconds}` : seconds} seconds</div>
+        </div>
       </div>
-    )
+    );
   }
 }

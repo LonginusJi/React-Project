@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 import { Button, Form, FormControl } from 'react-bootstrap';
 
-export class Countdown extends React.Component {
+export default class Countdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,22 +32,23 @@ export class Countdown extends React.Component {
   startTimer() {
     this.setState({ countdownStart: true, countdownFinish: false });
     const { deadline } = this.state;
-    this.setState({ seconds: deadline })
+    this.setState({ seconds: deadline });
 
     const timer = setInterval(() => {
-      this.setState({ seconds: this.state.seconds - 1 })
+      this.setState((prevState) => ({ seconds: prevState.seconds - 1 }));
       if (this.state.seconds === 0) {
-        this.setState({ countdownFinish: true })
+        this.setState({ countdownFinish: true });
         clearInterval(timer);
       }
     }, 1000);
 
-    this.setState({ timer: timer })
+    this.setState({ timer });
   }
 
   stopTimer() {
-    clearInterval(this.state.timer);
-    this.setState({countdownStopped: true});
+    const { timer } = this.state;
+    clearInterval(timer);
+    this.setState({ countdownStopped: true });
   }
 
   resetTimer() {
@@ -55,32 +56,50 @@ export class Countdown extends React.Component {
       countdownStart: false,
       countdownStopped: false,
       countdownFinish: false,
-      seconds: 0
+      seconds: 0,
     });
   }
 
   render() {
-    const { countdownStart, countdownStopped, countdownFinish, deadline, seconds } = this.state;
+    const {
+      countdownStart,
+      countdownStopped,
+      countdownFinish,
+      timeSetted,
+      deadline,
+      seconds,
+    } = this.state;
     return (
-      <div className='component-container'>
-        <Form inline className='center-block'>
+      <div className="component-container">
+        <Form inline className="center-block">
           <FormControl
-            className='Deadline-input'
-            placeholder='Set countdown seconds'
-            onChange={e => this.onDeadLineChange(e.target.value)} />
-          {!countdownStart ?
-            <Button disabled={!this.state.timeSetted} onClick={this.startTimer}>Start</Button>
-            : <Button onClick={this.stopTimer}>Stop</Button>
-          }
-          <Button disabled={!countdownStopped && !countdownFinish} onClick={this.resetTimer}>Reset</Button>
+            className="Deadline-input"
+            placeholder="Set countdown seconds"
+            onChange={(e) => this.onDeadLineChange(e.target.value)}
+          />
+          {!countdownStart
+            ? <Button disabled={!timeSetted} onClick={this.startTimer}>Start</Button>
+            : <Button onClick={this.stopTimer}>Stop</Button>}
+          <Button
+            disabled={!countdownStopped && !countdownFinish}
+            onClick={this.resetTimer}
+          >
+            Reset
+          </Button>
         </Form>
-        {countdownStart && !countdownFinish && <div className='App-title'>
-          Countdown to {deadline}: {seconds} {seconds === 1 ? 'second' : 'seconds'} remain
-        </div>}
-        {countdownFinish && <div className='App-title'>
-          Countdown finished
-        </div>}
+        {countdownStart && !countdownFinish
+          && (
+          <div className="App-title">
+            Countdown to {deadline}: {seconds} {seconds === 1 ? 'second' : 'seconds'} remain
+          </div>
+          )}
+        {countdownFinish
+          && (
+            <div className="App-title">
+              Countdown finished
+            </div>
+          )}
       </div>
-    )
+    );
   }
 }

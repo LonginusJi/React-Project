@@ -1,33 +1,33 @@
-import React from "react";
+import React from 'react';
 
 import { Button } from 'react-bootstrap';
 
-export class ProgressBar extends React.Component {
+export default class ProgressBar extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       loader: null,
-      length: 0
-    }
+      length: 0,
+    };
 
     this.startProgress = this.startProgress.bind(this);
     this.resetProgress = this.resetProgress.bind(this);
   }
 
   startProgress() {
-    let progressBar = document.querySelector('.progress-bar')
+    const progressBar = document.querySelector('.progress-bar');
     let length = 0;
     const loader = setInterval(() => {
       if (length === 100) {
         clearInterval(loader);
       } else {
-        length++;
-        var firstStart = 100 -length
-        var secondStart = 180-length
-        var thirdStart = 200-length
-        progressBar.style.background = `linear-gradient(0.25turn, rgb(47, 11, 252) ${firstStart}%, rgb(255, 25, 25) ${secondStart}%, rgb(18, 233, 57) ${thirdStart}%)`
-        progressBar.style.width = length + '%';
-        progressBar.style.innerWidth = length + '%';
+        length += 1;
+        const firstStart = 100 - length;
+        const secondStart = 180 - length;
+        const thirdStart = 200 - length;
+        progressBar.style.background = `linear-gradient(0.25turn, rgb(47, 11, 252) ${firstStart}%, rgb(255, 25, 25) ${secondStart}%, rgb(18, 233, 57) ${thirdStart}%)`;
+        progressBar.style.width = `${length}%`;
+        progressBar.style.innerWidth = `${length}%`;
         this.setState({ length });
       }
     }, 100);
@@ -36,7 +36,8 @@ export class ProgressBar extends React.Component {
   }
 
   resetProgress() {
-    clearInterval(this.state.loader);
+    const { loader } = this.state;
+    clearInterval(loader);
     this.setState({ length: 0 });
     document.querySelector('.progress-bar').style.width = '0%';
     document.querySelector('.progress-bar').style.background = 'rgb(47, 11, 252)';
@@ -50,7 +51,9 @@ export class ProgressBar extends React.Component {
           <div className="progress-bar" />
         </div>
         <span className="progress-label">
-          Loading: {length}%
+          Loading:
+          {length}
+          %
         </span>
         <div className="button-group">
           <Button onClick={this.startProgress}>
@@ -61,6 +64,6 @@ export class ProgressBar extends React.Component {
           </Button>
         </div>
       </div>
-    )
+    );
   }
 }

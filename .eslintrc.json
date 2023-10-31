@@ -1,0 +1,24 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 2017
+      },
+
+    "parser": "babel-eslint",
+    "extends": "airbnb",
+    "env": {
+        "browser": true,
+        "node": false
+      },
+      "rules": {
+        "eqeqeq": 1,
+        "semi": 1,
+        "linebreak-style": ["warn", "windows"],
+        "quotes": ["warn", "single"],
+        "no-param-reassign": ["error", { "props": false }],
+
+        "react/jsx-one-expression-per-line": 0,
+        "react/destructuring-assignment": 0,
+        "import/extensions": ["error", "always", {"js": "never", "json": "never", "jsx": "never"}],
+        "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
+      }
+}

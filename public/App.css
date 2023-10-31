@@ -1,13 +1,3 @@
-.App{
-    text-align: center;
-    font-size: 35px;
-    margin-top: 20px;
-}
-
-.App-title{
-    font-size: 50px;
-}
-
 .component-container {
     display: flex;
     flex-direction: column;
@@ -18,7 +8,12 @@
 }
 
 /* clock and countdown component */
+.clock-title{
+    font-size: 50px;
+    align-self: center;
+}
 .Deadline-input{
+    width: 100px !important;
     font-size: 20px;
     margin: 5px;
 }
@@ -28,9 +23,15 @@
     margin-right: auto;
 }
 
-.Clock-days, .Clock-hours, .Clock-minutes, .Clock-seconds{
-    display: inline;
+.clock-container{
     margin: 10px;
+    align-self: center;
+    font-size: 30px;
+
+    .clock-days, .clock-hours, .clock-minutes, .clock-seconds{
+        display: inline;
+        margin: 10px;
+    }
 }
 
 /* progressbar component */
@@ -55,9 +56,13 @@
     align-self: center;
 }
 
+/* rect component */
 .rect-container {
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
     display: flex;
-    justify-content: center;
     align-items: flex-end;
 }
 
