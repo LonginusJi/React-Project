@@ -1,3 +1,7 @@
+#root {
+    overflow: hidden;
+}
+
 .component-container {
     display: flex;
     flex-direction: column;
@@ -80,3 +84,33 @@
     top: -21px;
     left: 16px;
 }
+
+/* ws */
+.ws-container {
+    margin: 0 auto;
+    height: 95vh;
+    width: 1630px;
+    background-image: url("./ws-space.jpg");
+    background-size: 100%;
+    position: relative;
+}
+.deck-remain {
+    position: absolute;
+    top: 380px;
+    left: 1358px;
+    font-size: 50px;
+}
+
+.footer {
+    width: 100%;
+    position:fixed;
+    bottom:0px;
+    text-align: center;
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+.card-content {
+    margin: 0 5px
+}
+
