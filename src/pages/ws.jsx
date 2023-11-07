@@ -1,18 +1,25 @@
 import React from 'react';
 
-import { Button, Form, FormControl } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import Deck from '../deck';
+
+function showPicture(card) {
+  document.querySelector('.card-picture').src = `https://www.tcgtool.cn/static/img/ws/azl_s102_${card.id.toLowerCase()}.png`;
+}
 
 export default class Ws extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       deck: Deck.Azl,
+      tomb: [],
+      bank: [],
       handCard: [],
     };
 
     this.draw = this.draw.bind(this);
     this.shuffle = this.shuffle.bind(this);
+    this.trigger = this.trigger.bind(this);
   }
 
   draw() {
@@ -31,15 +38,43 @@ export default class Ws extends React.Component {
     this.setState({ deck });
   }
 
+  trigger() {
+    const { deck, bank } = this.state;
+    const judgeCard = deck.shift();
+    showPicture(judgeCard);
+    bank.push(judgeCard);
+    this.setState({ deck, bank });
+  }
+
   render() {
-    const { deck, handCard } = this.state;
-    const handCardContent = handCard.map((card, index) => <span className="card-content" key={index}>{card}</span>);
+    const {
+      deck,
+      tomb,
+      bank,
+      handCard,
+    } = this.state;
+    // eslint-disable-next-line react/no-array-index-key
+    const handCardContent = handCard.map((card) => {
+      const url = `https://www.tcgtool.cn/static/img/ws/azl_s102_${card.id.toLowerCase()}.png`;
+      return (
+        <img
+          className="card-content"
+          key={Math.random()}
+          src={url}
+          alt=""
+          onClick={() => showPicture(card)} />
+      );
+    });
 
     return (
       <div className="ws-container">
+        <img className="card-picture" src="" alt="" />
         <span className="deck-remain">Deck: {deck.length}</span>
+        <span className="tomb-remain">Tomb: {tomb.length}</span>
+        <span className="bank-remain">Bank: {bank.length}</span>
         <Button className="draw" onClick={this.draw}>Draw</Button>
         <Button className="shuffle" onClick={this.shuffle}>Shuffle</Button>
+        <Button className="trigger" onClick={this.trigger}>Trigger</Button>
         <div className="footer">
           <div className="hand-card-content">
             手札({handCardContent.length}):{handCardContent}

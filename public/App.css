@@ -88,29 +88,69 @@
 /* ws */
 .ws-container {
     margin: 0 auto;
-    height: 95vh;
-    width: 1630px;
+    height: 80vh;
+    width: 1330px;
     background-image: url("./ws-space.jpg");
     background-size: 100%;
+    background-repeat: no-repeat;
     position: relative;
 }
-.deck-remain {
-    position: absolute;
-    top: 380px;
-    left: 1358px;
-    font-size: 50px;
-}
-
 .footer {
-    width: 100%;
-    position:fixed;
-    bottom:0px;
+    width: inherit;
+    padding-bottom: 10px;
+    position: fixed;
+    bottom: 0px;
     text-align: center;
     font-size: 25px;
-    margin-bottom: 10px;
+    .card-content {
+        margin: 0 5px;
+        font-size: inherit;
+        max-height: 200px;
+        max-width: 200px;
+        cursor:pointer;
+    }
 }
 
-.card-content {
-    margin: 0 5px
+.card-picture {
+    top: 30px;
+    left: 190px;
+    position: absolute;
+    max-height: 310px;
+    max-width: 300px;
 }
+
+.deck-remain {
+    position: absolute;
+    top: 310px;
+    right: 70px;
+    font-size: 40px;
+}
+.tomb-remain {
+    position: absolute;
+    bottom: 165px;
+    right: 75px;
+    font-size: 40px;
+    background-color: white;
+}
+.bank-remain {
+    position: absolute;
+    bottom: 370px;
+    left: -5px;
+    font-size: 40px;
+    background-color: white;
+}
+.draw {
+    font-size: 30px;
+    position: absolute;
+    right: 150px;
+    top: 280px;
+}
+.shuffle {
+    font-size: 30px;
+    position: absolute;
+    right: 55px;
+    top: 280px;
+}
+
+
 
