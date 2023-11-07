@@ -73,7 +73,7 @@ export default class Countdown extends React.Component {
       <div className="component-container">
         <Form inline className="center-block">
           <FormControl
-            className="Deadline-input"
+            className="Countdown-input"
             placeholder="Set countdown seconds"
             onChange={(e) => this.onDeadLineChange(e.target.value)}
           />

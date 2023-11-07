@@ -22,10 +22,9 @@ export default class ProgressBar extends React.Component {
         clearInterval(loader);
       } else {
         length += 1;
-        const firstStart = 100 - length;
         const secondStart = 180 - length;
         const thirdStart = 200 - length;
-        progressBar.style.background = `linear-gradient(0.25turn, rgb(47, 11, 252) ${firstStart}%, rgb(255, 25, 25) ${secondStart}%, rgb(18, 233, 57) ${thirdStart}%)`;
+        progressBar.style.background = `linear-gradient(0.25turn, rgb(47, 11, 252) 0%, rgb(255, 25, 25) ${secondStart}%, rgb(18, 233, 57) ${thirdStart}%)`;
         progressBar.style.width = `${length}%`;
         progressBar.style.innerWidth = `${length}%`;
         this.setState({ length });
