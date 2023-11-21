@@ -53,7 +53,7 @@
     }
 }
 .progress-label {
-    align-self: end;
+    float: right;
 }
 .button-group {
     align-self: center;
@@ -150,6 +150,3 @@
     right: 55px;
     top: 280px;
 }
-
-
-

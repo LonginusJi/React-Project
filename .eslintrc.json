@@ -20,6 +20,12 @@
         "react/no-unused-state": 1,
         "react/jsx-one-expression-per-line": 0,
         "react/destructuring-assignment": 0,
+        "react/jsx-curly-newline": 0,
+        "react/state-in-constructor": 0,
+        "react/static-property-placement": 0,
+        "react/jsx-props-no-spreading": 0,
+        "react/jsx-fragments": 0,
+        "jsx-a11y/control-has-associated-label": 0,
         "import/extensions": ["error", "always", {"js": "never", "json": "never", "jsx": "never"}],
         "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
       }
