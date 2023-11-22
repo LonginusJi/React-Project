@@ -23,12 +23,6 @@ export default class clock extends React.Component {
       },
     };
 
-    this.onYearChange = this.onYearChange.bind(this);
-    this.onMonthChange = this.onMonthChange.bind(this);
-    this.onDayChange = this.onDayChange.bind(this);
-    this.onHourChange = this.onHourChange.bind(this);
-    this.onMinuteChange = this.onMinuteChange.bind(this);
-    this.onSecondChange = this.onSecondChange.bind(this);
     this.changeTargetTime = this.changeTargetTime.bind(this);
   }
 
@@ -41,34 +35,10 @@ export default class clock extends React.Component {
     clearInterval(timer);
   }
 
-  onYearChange(value) {
+  onValueChange(value, key) {
     const { newTime } = this.state;
-    this.setState({ newTime: { ...newTime, year: value } });
-  }
-
-  onMonthChange(value) {
-    const { newTime } = this.state;
-    this.setState({ newTime: { ...newTime, month: value } });
-  }
-
-  onDayChange(value) {
-    const { newTime } = this.state;
-    this.setState({ newTime: { ...newTime, day: value } });
-  }
-
-  onHourChange(value) {
-    const { newTime } = this.state;
-    this.setState({ newTime: { ...newTime, hour: value } });
-  }
-
-  onMinuteChange(value) {
-    const { newTime } = this.state;
-    this.setState({ newTime: { ...newTime, minute: value } });
-  }
-
-  onSecondChange(value) {
-    const { newTime } = this.state;
-    this.setState({ newTime: { ...newTime, second: value } });
+    newTime[Object.keys(newTime)[key]] = value;
+    this.setState({ newTime: { ...newTime } });
   }
 
   getTimeUtil(newTime) {
@@ -103,6 +73,7 @@ export default class clock extends React.Component {
       hours,
       minutes,
       seconds,
+      newTime,
     } = this.state;
     return (
       <div className="component-container">
@@ -111,36 +82,16 @@ export default class clock extends React.Component {
           Countdown to {deadline}
         </div>
         <Form inline className="center-block">
-          <FormControl
-            className="Deadline-input"
-            placeholder="Year"
-            onChange={(e) => this.onYearChange(e.target.value)}
-          />
-          <FormControl
-            className="Deadline-input"
-            placeholder="Month"
-            onChange={(e) => this.onMonthChange(e.target.value)}
-          />
-          <FormControl
-            className="Deadline-input"
-            placeholder="Day"
-            onChange={(e) => this.onDayChange(e.target.value)}
-          />
-          <FormControl
-            className="Deadline-input"
-            placeholder="Hour"
-            onChange={(e) => this.onHourChange(e.target.value)}
-          />
-          <FormControl
-            className="Deadline-input"
-            placeholder="Minute"
-            onChange={(e) => this.onMinuteChange(e.target.value)}
-          />
-          <FormControl
-            className="Deadline-input"
-            placeholder="Second"
-            onChange={(e) => this.onSecondChange(e.target.value)}
-          />
+          {Object.keys(newTime).map((ele, i) => {
+            return (
+              <FormControl
+                className="Deadline-input"
+                placeholder={ele}
+                key={i}
+                onChange={(e) => this.onValueChange(e.target.value, i)}
+              />
+            )
+          })}
           <Button
             disabled={!deadline}
             onClick={this.changeTargetTime}
@@ -149,10 +100,10 @@ export default class clock extends React.Component {
           </Button>
         </Form>
         <div className="clock-container">
-          <div className="clock-days">{days < 10 && days > 0 ? `0${days}` : days} days</div>
-          <div className="clock-hours">{hours < 10 && hours > 0 ? `0${hours}` : hours} hours</div>
-          <div className="clock-minutes">{minutes < 10 && minutes > 0 ? `0${minutes}` : minutes} minutes</div>
-          <div className="clock-seconds">{seconds < 10 && seconds > 0 ? `0${seconds}` : seconds} seconds</div>
+          <div className="clock-days">{days >= 0 ? days : days + 1} days</div>
+          <div className="clock-hours">{ hours >= 0 ? hours : hours + 1} hours</div>
+          <div className="clock-minutes">{ minutes >= 0 ? minutes : minutes + 1} minutes</div>
+          <div className="clock-seconds">{seconds < 10 && seconds >= 0 ? `0${seconds}` : seconds} seconds</div>
         </div>
       </div>
     );
