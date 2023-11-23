@@ -7,6 +7,7 @@ export default class clock extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoadFinished: false,
       timer: null,
       days: 0,
       hours: 0,
@@ -24,6 +25,7 @@ export default class clock extends React.Component {
     };
 
     this.changeTargetTime = this.changeTargetTime.bind(this);
+    this.loadFinished = this.loadFinished.bind(this);
   }
 
   componentDidMount() {
@@ -66,8 +68,13 @@ export default class clock extends React.Component {
     this.setState({ deadline: `${year} ${month}/${day} ${hour}:${minute}:${second}` });
   }
 
+  loadFinished() {
+    this.setState({ isLoadFinished: true });
+  }
+
   render() {
     const {
+      isLoadFinished,
       deadline,
       days,
       hours,
@@ -77,34 +84,38 @@ export default class clock extends React.Component {
     } = this.state;
     return (
       <div className="component-container">
-        <ProgressBar />
-        <div className="clock-title">
-          Countdown to {deadline}
-        </div>
-        <Form inline className="center-block">
-          {Object.keys(newTime).map((ele, i) => {
-            return (
-              <FormControl
-                className="Deadline-input"
-                placeholder={ele}
-                key={i}
-                onChange={(e) => this.onValueChange(e.target.value, i)}
-              />
-            )
-          })}
-          <Button
-            disabled={!deadline}
-            onClick={this.changeTargetTime}
-          >
-            Submit
-          </Button>
-        </Form>
-        <div className="clock-container">
-          <div className="clock-days">{days >= 0 ? days : days + 1} days</div>
-          <div className="clock-hours">{ hours >= 0 ? hours : hours + 1} hours</div>
-          <div className="clock-minutes">{ minutes >= 0 ? minutes : minutes + 1} minutes</div>
-          <div className="clock-seconds">{seconds < 10 && seconds >= 0 ? `0${seconds}` : seconds} seconds</div>
-        </div>
+        {!isLoadFinished
+          ? <ProgressBar loadFinished={this.loadFinished} />
+          : <div className="component-container">
+            <div className="clock-title">
+              Countdown to {deadline}
+            </div>
+            <Form inline className="center-block">
+              {Object.keys(newTime).map((ele, i) => {
+                return (
+                  <FormControl
+                    className="Deadline-input"
+                    placeholder={ele}
+                    key={i}
+                    onChange={(e) => this.onValueChange(e.target.value, i)}
+                  />
+                )
+              })}
+              <Button
+                disabled={!deadline}
+                onClick={this.changeTargetTime}
+              >
+                Submit
+              </Button>
+            </Form>
+            <div className="clock-container">
+              <div className="clock-days">{days >= 0 ? days : days + 1} days</div>
+              <div className="clock-hours">{hours >= 0 ? hours : hours + 1} hours</div>
+              <div className="clock-minutes">{minutes >= 0 ? minutes : minutes + 1} minutes</div>
+              <div className="clock-seconds">{seconds < 10 && seconds >= 0 ? `0${seconds}` : seconds} seconds</div>
+            </div>
+          </div>
+        }
       </div>
     );
   }
