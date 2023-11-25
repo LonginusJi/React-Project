@@ -2,12 +2,16 @@
     "parserOptions": {
         "ecmaVersion": 2017
       },
-
     "parser": "babel-eslint",
-    "extends": "airbnb",
+    "extends": [
+      "react-app", //  react帮配置好了一些语法，譬如箭头函数
+      "airbnb",
+      "plugin:prettier/recommended" // prettier配置
+    ],
+
     "env": {
         "browser": true,
-        "node": false
+        "node": true
       },
       "rules": {
         "eqeqeq": 1,
