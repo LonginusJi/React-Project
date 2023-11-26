@@ -5,8 +5,10 @@
       },
     "parser": "babel-eslint",
     "extends": [
-      "react-app", //  react帮配置好了一些语法，譬如箭头函数
-      "airbnb"  // "plugin:prettier/recommended" // prettier配置
+      "react-app",
+      "plugin:react/recommended",
+      "plugin:react-hooks/recommended",
+      "airbnb"  //
     ],
     "plugins": [
       "react",
