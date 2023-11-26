@@ -10,12 +10,13 @@
       "plugin:react-hooks/recommended",
       "airbnb"  //
     ],
-    "plugins": [
-      "react",
-      "react-hooks"
-    ],
+    // "plugins": [
+    //   "react",
+    //   "react-hooks"
+    // ],
     "env": {
         "browser": true,
+        "es6": true,
         "node": true
       },
       "rules": {
