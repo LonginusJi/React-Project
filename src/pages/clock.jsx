@@ -5,6 +5,14 @@ import React from 'react';
 import { Button, Form, FormControl } from 'react-bootstrap';
 import ProgressBar from '../component/progressbar';
 
+function formatNumber(str) {
+  if (!str) return '00';
+  const num = Number(str);
+  if (num > 0 && num < 10) {
+    return `0${num}`;
+  } return num;
+}
+
 export default class clock extends React.Component {
   constructor(props) {
     super(props);
@@ -15,7 +23,7 @@ export default class clock extends React.Component {
       hours: 0,
       minutes: 0,
       seconds: 0,
-      deadline: '2023, 11/25 12:00:00',
+      deadline: '2023, 12/25 12:00:00',
       newTime: {
         year: 0,
         month: 0,
@@ -64,9 +72,9 @@ export default class clock extends React.Component {
     const year = newTime.year ? newTime.year : '1970  ';
     const month = newTime.month ? newTime.month : '1';
     const day = newTime.day ? newTime.day : '1';
-    const hour = newTime.hour ? newTime.hour < 10 && newTime.hour > 0 ? `0${newTime.hour}` : newTime.hour : '00';
-    const minute = newTime.minute ? newTime.minute < 10 && newTime.minute > 0 ? `0${newTime.minute}` : newTime.minute : '00';
-    const second = newTime.second ? newTime.second < 10 && newTime.second > 0 ? `0${newTime.second}` : newTime.second : '00';
+    const hour = formatNumber(newTime.hour);
+    const minute = formatNumber(newTime.minute);
+    const second = formatNumber(newTime.second);
     this.setState({ deadline: `${year} ${month}/${day} ${hour}:${minute}:${second}` });
   }
 
@@ -86,37 +94,36 @@ export default class clock extends React.Component {
     } = this.state;
     return (
       <div className="component-container">
-        {!isLoadFinished
-          ? <ProgressBar loadFinished={this.loadFinished} />
-          : <div className="component-container">
-            <div className="clock-title">
-              Countdown to {deadline}
-            </div>
-            <Form inline className="center-block">
-              {Object.keys(newTime).map((ele, i) => {
-                return (
+        {!isLoadFinished ? <ProgressBar loadFinished={this.loadFinished} />
+          : (
+            <div className="component-container">
+              <div className="clock-title">
+                Countdown to {deadline}
+              </div>
+              <Form inline className="center-block">
+                {Object.keys(newTime).map((ele, i) => (
                   <FormControl
                     className="Deadline-input"
                     placeholder={ele}
                     key={i}
                     onChange={(e) => this.onValueChange(e.target.value, i)}
                   />
-                )
-              })}
-              <Button
-                disabled={!deadline}
-                onClick={this.changeTargetTime}
-              >
-                Submit
-              </Button>
-            </Form>
-            <div className="clock-container">
-              <div className="clock-days">{days >= 0 ? days : days + 1} days</div>
-              <div className="clock-hours">{hours >= 0 ? hours : hours + 1} hours</div>
-              <div className="clock-minutes">{minutes >= 0 ? minutes : minutes + 1} minutes</div>
-              <div className="clock-seconds">{seconds < 10 && seconds >= 0 ? `0${seconds}` : seconds} seconds</div>
+                ))}
+                <Button
+                  disabled={!deadline}
+                  onClick={this.changeTargetTime}
+                >
+                  Submit
+                </Button>
+              </Form>
+              <div className="clock-container">
+                <div className="clock-days">{days >= 0 ? days : days + 1} days</div>
+                <div className="clock-hours">{hours >= 0 ? hours : hours + 1} hours</div>
+                <div className="clock-minutes">{minutes >= 0 ? minutes : minutes + 1} minutes</div>
+                <div className="clock-seconds">{seconds < 10 && seconds >= 0 ? `0${seconds}` : seconds} seconds</div>
+              </div>
             </div>
-          </div>
+          )
         }
       </div>
     );

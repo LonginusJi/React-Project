@@ -5,8 +5,7 @@
     "parser": "babel-eslint",
     "extends": [
       "react-app", //  react帮配置好了一些语法，譬如箭头函数
-      "airbnb",
-      "plugin:prettier/recommended" // prettier配置
+      "airbnb"  // "plugin:prettier/recommended" // prettier配置
     ],
 
     "env": {
@@ -21,15 +20,19 @@
         "no-unused-vars": 1,
         "no-param-reassign": ["error", { "props": false }],
 
+        "jsx-quotes": ["warn", "prefer-double"],
+        "jsx-a11y/control-has-associated-label": 0,
+
         "react/no-unused-state": 1,
-        "react/jsx-one-expression-per-line": 0,
+        "react/no-array-index-key": 0,
         "react/destructuring-assignment": 0,
+        "react/jsx-one-expression-per-line": 0,
         "react/jsx-curly-newline": 0,
-        "react/state-in-constructor": 0,
-        "react/static-property-placement": 0,
         "react/jsx-props-no-spreading": 0,
         "react/jsx-fragments": 0,
-        "jsx-a11y/control-has-associated-label": 0,
+        "react/static-property-placement": 0,
+        "react/state-in-constructor": 0,
+
         "import/extensions": ["error", "always", {"js": "never", "json": "never", "jsx": "never"}],
         "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
       }
